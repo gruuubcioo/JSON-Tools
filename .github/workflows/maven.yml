@@ -1,10 +1,10 @@
-name: Java CI with Maven
+name: JSON Tools Build
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -13,13 +13,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up JDK 21
+    - name: JDK setup
       uses: actions/setup-java@v4
       with:
         java-version: '21'
         distribution: 'temurin'
         cache: 'maven'
-    # 3. Zbuduj projekt i uruchom testy
-    # Flaga -B (batch mode) sprawia, że logi są czytelniejsze (mniej spamu w konsoli)
-    - name: Build with Maven
+        
+    - name: Build and Test
       run: mvn -B package --file pom.xml
