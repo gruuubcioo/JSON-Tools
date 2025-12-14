@@ -1,18 +1,17 @@
 package pl.put.poznan.transformer.logic;
 
-/**
- * This is just an example to show that the logic should be outside the REST service.
- */
+import com.fasterxml.jackson.databind.JsonNode;
+
 public class TextTransformer {
 
     private final String[] transforms;
 
-    public TextTransformer(String[] transforms){
+    public TextTransformer(String[] transforms) {
         this.transforms = transforms;
     }
 
-    public String transform(String text){
+    public JsonNode transform(JsonNode body) {
         // of course, normally it would do something based on the transforms
-        return text.toUpperCase();
+        return body;
     }
 }
