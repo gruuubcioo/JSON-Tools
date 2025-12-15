@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-class TextTransformerTest {
+class JsonTransformerTest {
     private ObjectMapper mapper;
 
     @BeforeEach
@@ -26,7 +26,7 @@ class TextTransformerTest {
         JsonNode jsonNode = mapper.readTree(jsonString);
 
         String[] transforms = {"minify"};
-        TextTransformer transformer = new TextTransformer(transforms);
+        JsonTransformer transformer = new JsonTransformer(transforms);
 
         // WHEN
         JsonNode result = transformer.transform(jsonNode);

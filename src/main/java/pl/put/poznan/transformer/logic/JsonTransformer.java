@@ -4,12 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class TextTransformer {
+public class JsonTransformer {
 
     private final String[] transforms;
     private final ObjectMapper mapper;
 
-    public TextTransformer(String[] transforms) {
+    public JsonTransformer(String[] transforms) {
         this.transforms = transforms;
         this.mapper = new ObjectMapper();
     }
