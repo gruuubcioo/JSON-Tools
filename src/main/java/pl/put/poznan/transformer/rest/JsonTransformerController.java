@@ -2,6 +2,7 @@ package pl.put.poznan.transformer.rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.web.bind.annotation.*;
+import pl.put.poznan.transformer.logic.JsonComparer;
 import pl.put.poznan.transformer.logic.JsonTransformer;
 
 @RestController
@@ -14,6 +15,7 @@ public class JsonTransformerController {
         JsonTransformer transformer = new JsonTransformer(transforms);
         return transformer.transform(body);
     }
+
 }
 
 
