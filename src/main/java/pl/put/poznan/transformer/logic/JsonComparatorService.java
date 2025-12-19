@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -21,6 +22,9 @@ public class JsonComparatorService {
             String[] FirstLines = ChangeFirstJson.split("\\r?\\n");
             String[] SecondLines = ChangeSecondJson.split("\\r?\\n");
 
+            FirstLines =cleanArray(FirstLines);
+            SecondLines=cleanArray(SecondLines);
+
             int Line1 = FirstLines.length;
             int Line2 = SecondLines.length;
             int MaxLine = Math.max(Line1, Line2);
@@ -30,7 +34,7 @@ public class JsonComparatorService {
                     differenceOccurred.add(i);
                     continue;
                 }
-                if (!FirstLines[i].equals(SecondLines[i])) {
+                else if (!FirstLines[i].equals(SecondLines[i])) {
                     differenceOccurred.add(i);
                 }
             }
@@ -41,5 +45,13 @@ public class JsonComparatorService {
 
 
         return differenceOccurred;
+    }
+    private String[] cleanArray(String[] lines) {
+        return Arrays.stream(lines)
+                .filter(line -> {
+                    String t = line.trim();
+                    return !(t.equals("{") || t.equals("}") || t.equals("},"));
+                })
+                .toArray(String[]::new);
     }
 }
