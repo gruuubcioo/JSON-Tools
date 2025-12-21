@@ -1,47 +1,18 @@
 package pl.put.poznan.transformer.logic;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.TextNode;
 import java.util.List;
-import java.util.ArrayList;
 
-public record JsonTransformer(String[] transforms) {
-    private void minify(JsonNode json) {
-        if (json.isObject()) {
-            ObjectNode objectNode = (ObjectNode) json;
+public class JsonTransformer {
+    private final String[] transforms;
+    private final List<String> filterKeys;
 
-            List<String> list = new ArrayList<>();
-            objectNode.fieldNames().forEachRemaining(list::add);
+    private final JsonMinifyService minifyService = new JsonMinifyService();
+    private final JsonFilterService filterService = new JsonFilterService();
 
-            for (String key : list) {
-                JsonNode value = objectNode.get(key);
-                String cleanedKey = key.trim().replaceAll("\\s+", " ");
-
-                if (!key.equals(cleanedKey)) {
-                    objectNode.remove(key);
-                    objectNode.set(cleanedKey, value);
-                }
-
-                if (value.isTextual()) {
-                    objectNode.put(cleanedKey, value.asText().trim().replaceAll("\\s+", " "));
-                }
-
-                minify(objectNode.get(cleanedKey));
-            }
-        } else if (json.isArray()) {
-            ArrayNode arrayNode = (ArrayNode) json;
-            for (int i = 0; i < arrayNode.size(); i++) {
-                JsonNode element = arrayNode.get(i);
-
-                if (element.isTextual()) {
-                    arrayNode.set(i, TextNode.valueOf(element.asText().trim().replaceAll("\\s+", " ")));
-                }
-
-                minify(arrayNode.get(i));
-            }
-        }
+    public JsonTransformer(String[] transforms, List<String> filterKeys) {
+        this.transforms = transforms;
+        this.filterKeys = filterKeys;
     }
 
     public String transform(JsonNode body) {
@@ -51,7 +22,9 @@ public record JsonTransformer(String[] transforms) {
 
         for (String transformation : transforms) {
             if (transformation.equalsIgnoreCase("minify")) {
-                minify(body);
+                minifyService.minify(body);
+            } else if (transformation.equalsIgnoreCase("filter")) {
+                filterService.deleteKeys(body, filterKeys, new java.util.ArrayList<>());
             } else {
                 throw new UnsupportedOperationException("Operation " + transformation + " is NOT supported.");
             }
