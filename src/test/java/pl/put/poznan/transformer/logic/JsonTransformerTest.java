@@ -18,9 +18,9 @@ class JsonTransformerTest {
     void testMinify() throws JsonProcessingException {
         // GIVEN
         String jsonString = "{    \n" +
-                "      \"name\": \"Jan\",\n" +
+                "      \"name\": \"  Jan\",\n" +
                 "  \"age\":   30,\n" +
-                "  \"city\":        \"Poznan\"\n" +
+                "  \"city   \":        \"Miasto   Poznan\"\n" +
                 "}";
 
         JsonNode jsonNode = mapper.readTree(jsonString);
@@ -28,11 +28,13 @@ class JsonTransformerTest {
         String[] transforms = {"minify"};
         JsonTransformer transformer = new JsonTransformer(transforms);
 
+        String expectedJson = "{\"name\":\"Jan\",\"age\":30,\"city\":\"Miasto Poznan\"}";
+
         // WHEN
-        JsonNode result = transformer.transform(jsonNode);
+        String result = transformer.transform(jsonNode);
 
         // THEN
         assertNotNull(result);
-        assertEquals(jsonNode, result);
+        assertEquals(expectedJson, result);
     }
 }
