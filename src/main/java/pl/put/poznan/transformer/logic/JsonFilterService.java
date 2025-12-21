@@ -11,24 +11,25 @@
         private final ObjectMapper objectMapper = new ObjectMapper();
 
         public String filterJson(String jsonInput, List<String> keys){
-            try{
-                List<String> validKeys = new ArrayList<>();
-                for(String key : keys){
-                    if(key != null && !key.trim().isEmpty()){
-                        validKeys.add(key);
-                    }
-                    else{
-                        //Informuj ze wykryto bledny klucz (do doknczenia przy #18)
-                    }
+            List<String> validKeys = new ArrayList<>();
+            List<String> errors = new ArrayList<>();
+            for(String key : keys){
+                if(key != null && !key.trim().isEmpty()){
+                    validKeys.add(key);
                 }
+                else{
+                    errors.add("Warning: Wykryto pusty klucz.");
+                }
+            }
+            try{
                 List<String> foundKeys = new ArrayList<>();
 
                 JsonNode initNode = objectMapper.readTree(jsonInput);
 
-                JsonNode filteredNode = deleteKeys(initNode, keys, foundKeys);
+                JsonNode filteredNode = deleteKeys(initNode, validKeys, foundKeys);
                 for(String key : validKeys){
                     if(!foundKeys.contains(key)){
-                        //Informuj ze klucz nie zostal znaleziony (do doknczenia przy #18)
+                        errors.add("Warning: Klucz " + key + " nie został wykryty.");
                     }
                 }
 
