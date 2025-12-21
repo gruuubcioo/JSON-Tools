@@ -26,7 +26,7 @@ class JsonTransformerTest {
         JsonNode jsonNode = mapper.readTree(jsonString);
 
         String[] transforms = {"minify"};
-        JsonTransformer transformer = new JsonTransformer(transforms);
+        JsonTransformer transformer = new JsonTransformer(transforms, null);
 
         String expectedJson = "{\"name\":\"Jan\",\"age\":30,\"city\":\"Miasto Poznan\"}";
 
