@@ -1,3 +1,9 @@
-/Users/mochodek/Documents/Dydaktyka/Wyklady/IO/Laboratory classes/projekt/ioprojectarchitecture/src/main/java/pl/put/poznan/transformer/app/TextTransformerApplication.java
-/Users/mochodek/Documents/Dydaktyka/Wyklady/IO/Laboratory classes/projekt/ioprojectarchitecture/src/main/java/pl/put/poznan/transformer/logic/TextTransformer.java
-/Users/mochodek/Documents/Dydaktyka/Wyklady/IO/Laboratory classes/projekt/ioprojectarchitecture/src/main/java/pl/put/poznan/transformer/rest/TextTransformerController.java
+D:\studia\sem5\io\projekt\JSON-Tools\src\main\java\pl\put\poznan\transformer\app\JsonToolsApplication.java
+D:\studia\sem5\io\projekt\JSON-Tools\src\main\java\pl\put\poznan\transformer\logic\JsonComparatorService.java
+D:\studia\sem5\io\projekt\JSON-Tools\src\main\java\pl\put\poznan\transformer\logic\JsonComparer.java
+D:\studia\sem5\io\projekt\JSON-Tools\src\main\java\pl\put\poznan\transformer\logic\JsonFilterService.java
+D:\studia\sem5\io\projekt\JSON-Tools\src\main\java\pl\put\poznan\transformer\logic\JsonMinifyService.java
+D:\studia\sem5\io\projekt\JSON-Tools\src\main\java\pl\put\poznan\transformer\logic\JsonTransformer.java
+D:\studia\sem5\io\projekt\JSON-Tools\src\main\java\pl\put\poznan\transformer\rest\GlobalExceptionHandler.java
+D:\studia\sem5\io\projekt\JSON-Tools\src\main\java\pl\put\poznan\transformer\rest\JsonCompareController.java
+D:\studia\sem5\io\projekt\JSON-Tools\src\main\java\pl\put\poznan\transformer\rest\JsonTransformerController.java

@@ -1,0 +1,4 @@
+pl\put\poznan\transformer\logic\JsonMinifyServiceTest.class
+pl\put\poznan\transformer\rest\JsonTransformerControllerTest.class
+pl\put\poznan\transformer\logic\JsonFilterServiceTest.class
+pl\put\poznan\transformer\logic\JsonComparatorServiceTest.class

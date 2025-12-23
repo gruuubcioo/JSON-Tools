@@ -1,0 +1,9 @@
+pl\put\poznan\transformer\logic\JsonComparatorService.class
+pl\put\poznan\transformer\rest\GlobalExceptionHandler.class
+pl\put\poznan\transformer\rest\JsonTransformerController.class
+pl\put\poznan\transformer\rest\JsonCompareController.class
+pl\put\poznan\transformer\logic\JsonMinifyService.class
+pl\put\poznan\transformer\logic\JsonTransformer.class
+pl\put\poznan\transformer\logic\JsonComparer.class
+pl\put\poznan\transformer\logic\JsonFilterService.class
+pl\put\poznan\transformer\app\JsonToolsApplication.class
