@@ -1,5 +1,6 @@
 package pl.put.poznan.transformer.logic;
 
+import static org.junit.jupiter.api.Assertions.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,9 +11,7 @@ class JsonBeautifyServiceTest {
     private ObjectMapper mapper;
 
     @BeforeEach
-    void setUp(){
-        mapper = new ObjectMapper();
-    }
+    void setUp(){ mapper = new ObjectMapper(); }
 
     @Test
     void testBeautify() throws JsonProcessingException {
@@ -32,12 +31,10 @@ class JsonBeautifyServiceTest {
         JsonTransformer transformer = new JsonTransformer(transforms, null);
 
         // WHEN
-        String result = transformer.transform(minifiedJson);
-        // naprawic funkcje transform i przetestowac czy test dziala
+        String result = transformer.transform(inputNode);
 
         // THEN
-        // asercje
-
+        assertEquals(expectedPrettyJson.replace("\r\n", "\n"), result.replace("\r\n", "\n"));
     }
 
 }
