@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: pl.put.poznan.transformer.rest.JsonTransformerControllerTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.361 s -- in pl.put.poznan.transformer.rest.JsonTransformerControllerTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.560 s -- in pl.put.poznan.transformer.rest.JsonTransformerControllerTest

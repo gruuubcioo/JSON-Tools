@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.transformer.logic.JsonTransformer;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/transform/json")
 public class JsonTransformerController {

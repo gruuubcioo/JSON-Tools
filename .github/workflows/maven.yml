@@ -2,9 +2,9 @@ name: JSON Tools Build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "frontendApp" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "frontendApp" ]
 
 jobs:
   build:
