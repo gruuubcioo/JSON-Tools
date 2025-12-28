@@ -1,4 +1,4 @@
-package pl.put.poznan.transformer.rest;
+package pl.put.poznan.JsonTools.rest;
 
 import org.springframework.http.HttpStatus;
 
