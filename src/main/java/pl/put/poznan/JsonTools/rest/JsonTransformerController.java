@@ -1,9 +1,9 @@
-package pl.put.poznan.transformer.rest;
+package pl.put.poznan.JsonTools.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.web.bind.annotation.*;
-import pl.put.poznan.transformer.logic.JsonTransformer;
+import pl.put.poznan.JsonTools.logic.JsonTransformer;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")

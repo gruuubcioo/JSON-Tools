@@ -1,9 +1,9 @@
-package pl.put.poznan.transformer.rest;
+package pl.put.poznan.JsonTools.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.put.poznan.transformer.logic.JsonComparatorService;
-import pl.put.poznan.transformer.logic.JsonComparer;
+import pl.put.poznan.JsonTools.logic.JsonComparatorService;
+import pl.put.poznan.JsonTools.logic.JsonComparer;
 
 import java.util.List;
 

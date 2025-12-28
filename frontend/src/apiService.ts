@@ -4,7 +4,7 @@ const Comparer_URL = 'http://localhost:8080/compare/json';
 const Transformer_URL = 'http://localhost:8080/transform/json';
 
 const jsonConfig = {
-    headers: {
+    headers: {  
         'Content-Type': 'application/json'
     },
     responseType: 'text'
