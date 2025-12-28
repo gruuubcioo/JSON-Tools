@@ -7,7 +7,7 @@ const jsonConfig = {
     headers: {  
         'Content-Type': 'application/json'
     },
-    responseType: 'text'
+    responseType: 'text' as const
 };
 
 export const transformJsonMinify = async (json1: any) => {
