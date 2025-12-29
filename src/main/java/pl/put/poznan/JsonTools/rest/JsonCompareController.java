@@ -9,7 +9,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/compare/json")
+@RequestMapping("/api/compare/json")
 public class JsonCompareController {
 
     private final JsonComparatorService jsonComparatorService;

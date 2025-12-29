@@ -8,7 +8,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/transform/json")
+@RequestMapping("/api/transform/json")
 public class JsonTransformerController {
 
     @RequestMapping(method = RequestMethod.POST, produces = "text/plain")

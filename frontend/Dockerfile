@@ -21,3 +21,6 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
+
+#docker build -t json-tools-frontend .
+#docker run -p 3000:80 json-tools-frontend
