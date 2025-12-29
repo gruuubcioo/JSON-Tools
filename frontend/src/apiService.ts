@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-const Comparer_URL = 'http://localhost:8080/compare/json';
-const Transformer_URL = 'http://localhost:8080/transform/json';
+const Comparer_URL = '/api/compare/json';
+const Transformer_URL = '/api/transform/json';
 
 const jsonConfig = {
-    headers: {
+    headers: {  
         'Content-Type': 'application/json'
     },
-    responseType: 'text'
+    responseType: 'text' as const
 };
 
 export const transformJsonMinify = async (json1: any) => {
