@@ -13,7 +13,7 @@ public class JsonTransformer {
 
     private final JsonMinifyService minifyService = new JsonMinifyService();
     private final JsonFilterService filterService = new JsonFilterService();
-//    private final JsonBeautifyService beautifyService = new JsonBeautifyService();
+    private final JsonBeautifyService beautifyService = new JsonBeautifyService();
 
     public JsonTransformer(String[] transforms, List<String> filterKeys) {
         this.transforms = transforms;
@@ -34,7 +34,7 @@ public class JsonTransformer {
                 filterService.deleteKeys(body, filterKeys, new java.util.ArrayList<>());
                 return body.toString();
             } else if (transformation.equalsIgnoreCase("beautify")) {
-//                beautifyService.beautify(body);
+                beautifyService.beautify(body);
                 return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(body);
             } else {
                 throw new UnsupportedOperationException("Nieznana operacja: " + transformation);
