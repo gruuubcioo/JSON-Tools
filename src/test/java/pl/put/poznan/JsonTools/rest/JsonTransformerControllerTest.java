@@ -33,7 +33,7 @@ class JsonTransformerControllerTest {
         String expectedJson = "{\"name\":\"Jan\",\"city\":\"Poznan\"}";
 
         // WHEN
-        ResultActions result = mockMvc.perform(post("/transform/json")
+        ResultActions result = mockMvc.perform(post("/api/transform/json")
                 .param("transforms", "minify")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(inputJson));
@@ -50,7 +50,7 @@ class JsonTransformerControllerTest {
         String invalidJson = "{name: name";
 
         // WHEN
-        ResultActions result = mockMvc.perform(post("/transform/json")
+        ResultActions result = mockMvc.perform(post("/api/transform/json")
                         .param("transforms", "minify")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(invalidJson));
