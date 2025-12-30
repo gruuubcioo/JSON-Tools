@@ -37,4 +37,42 @@ class JsonMinifyServiceTest {
         assertNotNull(result);
         assertEquals(expectedJson, result);
     }
+    @Test
+    void testMinifyEmpty() throws JsonProcessingException {
+        String jsonString = "{}";
+
+        JsonNode jsonNode = mapper.readTree(jsonString);
+        String[] transforms = {"minify"};
+        JsonTransformer transformer = new JsonTransformer(transforms, null);
+
+        String result = transformer.transform(jsonNode);
+        assertEquals("{}", result);
+    }
+
+    @Test
+    void testMinifySingleLine() throws JsonProcessingException {
+        String jsonString = "{     \"name\" :  \" Tomaszek\" }";
+
+        JsonNode jsonNode = mapper.readTree(jsonString);
+        String[] transforms = {"minify"};
+        JsonTransformer transformer = new JsonTransformer(transforms, null);
+
+        String result = transformer.transform(jsonNode);
+        assertEquals("{\"name\":\"Tomaszek\"}", result);
+    }
+    @Test
+    void testMinifyNestedJson() throws JsonProcessingException {
+        String JsonString = " {\"author\": \n" +
+                "    {\n" +
+                "      \"lastname\": \"Doe\",\n" +
+                "      \"firstname\": \"Jane\"\n" +
+                "    }\n" +
+                "}";
+        JsonNode jsonNode = mapper.readTree(JsonString);
+        String[] transforms = {"minify"};
+        JsonTransformer transformer = new JsonTransformer(transforms, null);
+
+        String result = transformer.transform(jsonNode);
+        assertEquals("{\"author\":{\"lastname\":\"Doe\",\"firstname\":\"Jane\"}}",result);
+    }
 }
