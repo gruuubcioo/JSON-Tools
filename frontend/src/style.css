@@ -201,3 +201,30 @@ textarea::-webkit-scrollbar-thumb, .output-box::-webkit-scrollbar-thumb {
 textarea:focus::-webkit-scrollbar-thumb {
     background-color: var(--col-light-purple);
 }
+@media (max-width: 768px){
+    .main-title{
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+    .options{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    .function{
+        padding: 10px;
+    }
+    .work-area{
+        padding: 20px 15px;
+    }
+    .inputs-row{
+        flex-direction: column;
+        gap: 10px
+    }
+    textarea{
+        height: 100px;
+    }
+    .container{
+        padding: 20px 10px;
+    }
+}
