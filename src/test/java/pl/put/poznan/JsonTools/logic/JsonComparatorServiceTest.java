@@ -50,9 +50,9 @@ class JsonComparatorServiceTest {
         assertTrue(result.isEmpty());
     }
 
-    // --- test the same jsons
+    // --- test empty fields
     @Test
-    void testCompareJsonLineByLineEmptyJsons() throws JsonProcessingException {
+    void testCompareJsonLineByLineEmptyFields() throws JsonProcessingException {
         // GIVEN
         String jsonFirstString = "";
         JsonNode firstJson = mapper.readTree(jsonFirstString);
@@ -88,6 +88,92 @@ class JsonComparatorServiceTest {
 
         // WHEN
         List<Integer> expectedResults = List.of(0, 1);
+
+        // THEN
+        assertEquals(expectedResults, jsonComparatorService.compareJsonLineByLine(firstJson, secondJson));
+    }
+
+    // --- test empty Jsons
+    @Test
+    void testCompareJsonLineByLineEmptyJsons() throws JsonProcessingException {
+        // GIVEN
+        String jsonFirstString = "";
+        JsonNode firstJson = mapper.readTree(jsonFirstString);
+
+        String jsonSecondString = "";
+        JsonNode secondJson = mapper.readTree(jsonSecondString);
+
+        // WHEN
+        List<Integer> result = jsonComparatorService.compareJsonLineByLine(firstJson, secondJson);
+
+        // THEN
+        assertTrue(result.isEmpty());
+    }
+
+    // --- test jsons with lists
+    @Test
+    void testCompareJsonLineByLineListJsons() throws JsonProcessingException {
+        // GIVEN
+        String jsonFirstString = """
+                        {
+                            "nums": [1, 2, 3],
+                            "numbers": [1, 2, 3]
+                        }
+                """;
+        JsonNode firstJson = mapper.readTree(jsonFirstString);
+
+        String jsonSecondString = """
+                        {
+                            "nums": [1, 2, 3],
+                            "numbers": [4, 5, 6]
+                        }
+                """;
+        JsonNode secondJson = mapper.readTree(jsonSecondString);
+
+        // WHEN
+        List<Integer> expectedResults = List.of(1);
+
+        // THEN
+        assertEquals(expectedResults, jsonComparatorService.compareJsonLineByLine(firstJson, secondJson));
+    }
+
+    // --- test nested jsons
+    @Test
+    void testCompareJsonLineByLineNestedJson() throws JsonProcessingException {
+        // GIVEN
+        String jsonFirstString = """
+                    {
+                      "nums" : [ {
+                        "1" : "2"
+                      }, {
+                        "3" : "4"
+                      } ],
+                      "numbers" : [ {
+                        "arr" : [ 1 ]
+                      } ],
+                      "hello" : "world"
+                    }
+                """;
+        JsonNode firstJson = mapper.readTree(jsonFirstString);
+
+        String jsonSecondString = """
+                    {
+                      "nums" : [ {
+                        "1" : "2"
+                      }, {
+                        "3" : "4000000"
+                      } ],
+                      "numbers" : [ {
+                        "arr0000000" : [ 1 ]
+                      } ],
+                      "hello" : "world",
+                      "goodbye" : "world"
+                    }
+                """;
+        JsonNode secondJson = mapper.readTree(jsonSecondString);
+
+        // WHEN
+        List<Integer> expectedResults = List.of(3, 6, 8, 9);
 
         // THEN
         assertEquals(expectedResults, jsonComparatorService.compareJsonLineByLine(firstJson, secondJson));

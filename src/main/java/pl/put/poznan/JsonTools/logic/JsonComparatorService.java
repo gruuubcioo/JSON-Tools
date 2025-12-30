@@ -78,7 +78,8 @@ public class JsonComparatorService {
         return Arrays.stream(lines)
                 .filter(line -> {
                     String t = line.trim();
-                    return !(t.equals("{") || t.equals("}") || t.equals("},"));
+                    return !(t.equals("{") || t.equals("}") || t.equals("},") ||
+                            t.equals("[") || t.equals("]") || t.equals("],"));
                 })
                 .toArray(String[]::new);
     }
