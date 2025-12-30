@@ -12,6 +12,7 @@ import pl.put.poznan.JsonTools.app.JsonToolsApplication;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.hamcrest.Matchers.containsString;
 
 @SpringBootTest(classes = JsonToolsApplication.class)
 @AutoConfigureMockMvc
@@ -45,7 +46,7 @@ class JsonTransformerControllerTest {
 
     // --- Invalid data test ---
     @Test
-    void testInvalidJsonShouldReturnBadRequest() throws Exception {
+    void testInvalidJsonShouldReturnBadRequestForMinify() throws Exception {
         // GIVEN
         String invalidJson = "{name: name";
 
@@ -57,5 +58,55 @@ class JsonTransformerControllerTest {
 
         // THEN
         result.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testBeautifyShouldReturnPrettyPrintedJson() throws Exception {
+        // GIVEN
+        String inputJson = "{\"name\":\"Jan\",\"city\":\"Poznan\"}";
+        String expectedSubstring = "\"name\" : \"Jan\"";
+
+        // WHEN
+        ResultActions result = mockMvc.perform(post("/api/transform/json")
+                .param("transforms", "beautify")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(inputJson));
+
+        // THEN
+        result.andExpect(status().isOk())
+                .andExpect(content().string(containsString("\n")))
+                .andExpect(content().string(containsString(expectedSubstring)));
+    }
+
+    @Test
+    void testInvalidJsonShouldReturnBadRequestForBeautify() throws Exception {
+        // GIVEN
+        String prettyInput = "{\n  \"name\": \"Jan\"\n";
+
+        // WHEN
+        ResultActions result = mockMvc.perform(post("/api/transform/json")
+                .param("transforms", "beautify")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(prettyInput));
+
+        // THEN
+        result.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testBeautifyNestedStructure() throws Exception {
+        // GIVEN
+        String input = "{\"user\":{\"id\":1},\"tags\":[\"java\",\"spring\"]}";
+
+        // WHEN
+        ResultActions result = mockMvc.perform(post("/api/transform/json")
+                .param("transforms", "beautify")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(input));
+
+        // THEN
+        result.andExpect(status().isOk())
+                .andExpect(content().string(containsString("  \"user\" : {")))
+                .andExpect(content().string(containsString("    \"id\" : 1")));
     }
 }
