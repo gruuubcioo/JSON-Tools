@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.CoreMatchers.not;
 
 @SpringBootTest(classes = JsonToolsApplication.class)
 @AutoConfigureMockMvc
@@ -109,4 +110,93 @@ class JsonTransformerControllerTest {
                 .andExpect(content().string(containsString("  \"user\" : {")))
                 .andExpect(content().string(containsString("    \"id\" : 1")));
     }
+
+    @Test
+    void testFilterOneKey() throws Exception{
+        //GIVEN
+        String input = "{\"id\":1,\"name\":\"Norbert\"}";
+
+        //WHEN
+        ResultActions result = mockMvc.perform(post("/api/transform/json")
+                .param("transforms", "filter")
+                .param("keys","id")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(input));
+        //THEN
+        result.andExpect(status().isOk())
+                .andExpect(content().string(not(containsString("\"id\":1"))))
+                .andExpect(content().string(containsString("{\"name\":\"Norbert\"}")));
+    }
+
+    @Test
+    void testFilterKeysInArray() throws Exception{
+        //GIVEN
+        String input = "{\"students\":[{\"id\":1, \"name\":\"Kamil\"}, {\"id\":2, \"name\":\"Anna\"}]}";
+
+        //WHEN
+        ResultActions result = mockMvc.perform(post("/api/transform/json")
+                .param("transforms", "filter")
+                .param("keys","name")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(input));
+        //THEN
+        result.andExpect(status().isOk())
+                .andExpect(content().string(not(containsString("\"name\""))))
+                .andExpect(content().string(containsString("\"id\":1")))
+                .andExpect(content().string(containsString("\"id\":2")));
+    }
+
+    @Test
+    void testFilterInvalidKey() throws Exception{
+        //GIVEN
+        String input = "{\"name\":\"Norbert\"}";
+
+        //WHEN
+        ResultActions result = mockMvc.perform(post("/api/transform/json")
+                .param("transforms", "filter")
+                .param("keys","surname")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(input));
+        //THEN
+        result.andExpect(status().isOk())
+                .andExpect(content().string(containsString("\"name\":\"Norbert\"")));
+    }
+
+    @Test
+    void testFilterManyKeys() throws Exception{
+        //GIVEN
+        String input = "{\"id\":1,\"name\":\"Anna\",\"surname\":\"Nowak\",\"age\":45}";
+
+        //WHEN
+        ResultActions result = mockMvc.perform(post("/api/transform/json")
+                .param("transforms", "filter")
+                .param("keys","id","surname")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(input));
+        //THEN
+        result.andExpect(status().isOk())
+                .andExpect(content().string(not(containsString("\"id\""))))
+                .andExpect(content().string(not(containsString("\"surname\""))))
+                .andExpect(content().string(containsString("\"name\"")))
+                .andExpect(content().string(containsString("\"age\"")));
+    }
+
+    @Test
+    void testFilterRecurency() throws Exception{
+        //GIVEN
+        String input = "{\"student\":{\"id\":1,\"name\":\"Mateusz\"},\"major\":\"it\"}";
+
+        //WHEN
+        ResultActions result = mockMvc.perform(post("/api/transform/json")
+                .param("transforms", "filter")
+                .param("keys","name")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(input));
+        //THEN
+        result.andExpect(status().isOk())
+                .andExpect(content().string(not(containsString("\"name\""))))
+                .andExpect(content().string(containsString("\"student\":{")))
+                .andExpect(content().string(containsString("\"id\":1")));
+    }
+
 }
