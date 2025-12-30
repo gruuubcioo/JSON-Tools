@@ -17,6 +17,7 @@ class JsonBeautifyServiceTest {
         String[] transforms = {"beautify"};
         transformer = new JsonTransformer(transforms, null);
     }
+
     @Test
     void testBeautifySimpleObjects() throws JsonProcessingException {
         // GIVEN
@@ -73,4 +74,43 @@ class JsonBeautifyServiceTest {
         assertEquals(expected.replace("\r\n", "\n").trim(), result.replace("\r\n", "\n").trim());
     }
 
+    @Test
+    void testBeautifyEmptyStructures() throws JsonProcessingException {
+        // GIVEN
+        String inputJson = "{\"emptyBracket\":{ },\"emptyArr\":[ ]}";
+        JsonNode inputNode = mapper.readTree(inputJson);
+
+        // WHEN
+        String result = transformer.transform(inputNode);
+
+        // THEN
+        assertTrue(result.contains("{ }"));
+        assertTrue(result.contains("[ ]"));
+    }
+
+    @Test
+    void testBeautifyDeeplyNestedObject() throws JsonProcessingException {
+        // GIVEN
+        String minifiedJson = "{\"l1\":{\"l2\":[{\"l3\":{\"l4\":{\"l5\":\"val\"}}}]}}";
+        JsonNode inputNode = mapper.readTree(minifiedJson);
+        String expected = """
+            {
+              "l1" : {
+                "l2" : [ {
+                  "l3" : {
+                    "l4" : {
+                      "l5" : "val"
+                    }
+                  }
+                } ]
+              }
+            }""";
+
+        // WHEN
+        String result = transformer.transform(inputNode);
+
+        // THEN
+        assertEquals(expected.replace("\r\n", "\n").trim(), result.replace("\r\n", "\n").trim());
+        assertTrue(result.contains("        \"l5\" : \"val\""));
+    }
 }
